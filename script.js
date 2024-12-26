@@ -41,9 +41,9 @@ function displayMeals(meals) {
             <div class="p-4">
                 <h3 class="text-lg font-bold text-gray-800">${meal.strMeal}</h3>
                 <div class="flex justify-between mt-4">
-                    <button class="px-4 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition" 
+                    <button class="px-4 py-2 bg-gray-600 text-white text-sm rounded-md hover:bg-green-700 transition" 
                         onclick="addToCart('${meal.idMeal}', '${meal.strMeal}')">Add to Cart</button>
-                    <button class="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition" 
+                    <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-blue-700 transition" 
                         onclick="showDetails('${meal.idMeal}')">Show Details</button>
                 </div>
             </div>
