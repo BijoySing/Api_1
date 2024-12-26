@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Finder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4">
+        <header class="text-center my-6">
+            <h1 class="text-4xl font-bold text-gray-800">Meal Finder</h1>
+            <div class="flex justify-center items-center mt-4">
+                <input type="text" id="search-bar" placeholder="Search for a meal..."
+                    class="w-2/3 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="search-btn"
+                    class="ml-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                    Search
+                </button>
+            </div>
+        </header>
+        <main class="flex gap-6">
+            <section id="meal-list" class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            </section>
+
+            <aside id="cart" class="w-1/4 bg-white shadow-md rounded-md p-4">
+                <h2 class="text-xl font-bold text-gray-800">Cart</h2>
+                <ul id="cart-items" class="mt-4 space-y-2">
+                </ul>
+            </aside>
+        </main>
+    </div>
+
+
+    <!-- Modal -->
+    <div id="meal-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-sm p-4 relative">
+            <!-- Close Button -->
+            <button class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl font-bold" id="close-modal">
+                &times;
+            </button>
+            <!-- Modal Content -->
+            <div id="modal-details" class="text-center">
+                <img id="meal-image" src="" alt="Meal Image" class="w-32 h-32 mx-auto rounded-md shadow-sm">
+                <h3 id="meal-title" class="text-xl font-bold mt-4 text-gray-800"></h3>
+                <h4 id="meal-category" class="text-sm text-gray-500 mt-2"></h4>
+                <h4 id="meal-area" class="text-sm text-gray-500 mt-1"></h4>
+                <p id="meal-tags" class="text-sm text-gray-700 mt-2"></p>
+
+                <p id="meal-instructions" class="text-sm text-gray-700 mt-4 leading-relaxed"></p>
+                <hr class="my-2">
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
