@@ -13,6 +13,18 @@ searchBtn.addEventListener("click", searchMeals);
 closeModal.addEventListener("click", () => modal.classList.add("hidden"));
 
 let cart = [];
+let cartCount = 0;
+
+document.addEventListener("DOMContentLoaded", loadDefaultMeals);
+
+async function loadDefaultMeals() {
+
+    const response = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=m");
+    const data = await response.json();
+
+    displayMeals(data.meals); 
+
+}
 
 async function searchMeals() {
     const query = searchBar.value.trim();
@@ -25,6 +37,7 @@ async function searchMeals() {
 }
 
 function displayMeals(meals) {
+    console.log(meals);
     mealList.innerHTML = "";
 
     if (meals.length === 0) {
@@ -41,9 +54,9 @@ function displayMeals(meals) {
             <div class="p-4">
                 <h3 class="text-lg font-bold text-gray-800">${meal.strMeal}</h3>
                 <div class="flex justify-between mt-4">
-                    <button class="px-4 py-2 bg-gray-600 text-white text-sm rounded-md hover:bg-green-700 transition" 
+                    <button class="px-4 py-2 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 transition" 
                         onclick="addToCart('${meal.idMeal}', '${meal.strMeal}')">Add to Cart</button>
-                    <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-blue-700 transition" 
+                    <button class="px-4 py-2 bg-yellow-600 text-white text-sm rounded-md hover:bg-yellow-700 transition" 
                         onclick="showDetails('${meal.idMeal}')">Show Details</button>
                 </div>
             </div>
@@ -54,16 +67,24 @@ function displayMeals(meals) {
 }
 
 function addToCart(id, name) {
+
     if (cart.find(item => item.id === id)) {
         alert("This meal is already in your cart!");
         return;
     }
+    if (cart.length >= 11) {
+        alert("You Cannot add more than 11 items to the cart");
+        return;
+    }
 
     cart.push({ id, name });
+    cartCount = cart.length; 
     updateCart();
+    document.getElementById("item-count").textContent = cartCount;
 }
 
 function updateCart() {
+
     cartItems.innerHTML = "";
     cart.forEach(item => {
         const cartItem = document.createElement("li");
@@ -71,18 +92,20 @@ function updateCart() {
 
         cartItem.innerHTML = `
             <span>${item.name}</span>
-            <button class="text-red-600 hover:text-red-800" onclick="removeFromCart('${item.id}')">Remove</button>
+            
+            <button class="text-red-600 hover:text-red-800" onclick="removeFromCart('${item.id}')"></button>
         `;
 
         cartItems.appendChild(cartItem);
+        cartCount = cart.length;
     });
 }
 
 function removeFromCart(id) {
     cart = cart.filter(item => item.id !== id);
+    cartCount = cart.length;
     updateCart();
 }
-
 
 async function showDetails(id) {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -99,7 +122,6 @@ async function showDetails(id) {
 
     document.getElementById("meal-instructions").textContent = meal.strInstructions.substring(0, 200) + "...";
 
-    // Show modal
     modal.classList.remove("hidden");
     modal.classList.add("flex");
 }
@@ -109,9 +131,13 @@ closeModal.addEventListener("click", () => {
     modal.classList.remove("flex");
 });
 
-window.addEventListener("click", (event) => {   
+
+window.addEventListener("click", (event) => {
     if (event.target === modal) {
         modal.classList.add("hidden");
+
         modal.classList.remove("flex");
+
     }
 });
+
